@@ -156,7 +156,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                           height: 50,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('assets/images/kakao_login.png'),
+                              image: AssetImage('assets/images/kakao_logo.png'),
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(4.0),

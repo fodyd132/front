@@ -65,120 +65,120 @@ class _DiaryPageState extends State<DiaryPage> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Color(0x992C2E42), // 지정된 색상으로 변경
-                    borderRadius: BorderRadius.circular(30), // 굴곡 15
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0x992C2E42), // 지정된 색상으로 변경
+                      borderRadius: BorderRadius.circular(30), // 굴곡 15
+                    ),
+                    child: TableCalendar(
+                      firstDay: DateTime.utc(2000, 1, 1),
+                      lastDay: DateTime.utc(2050, 12, 31),
+                      focusedDay: _focusedDay,
+                      selectedDayPredicate: (day) {
+                        return isSameDay(_selectedDay, day);
+                      },
+                      onDaySelected: _onDaySelected,
+                      calendarFormat: CalendarFormat.month,
+                      calendarStyle: CalendarStyle(
+                        defaultTextStyle: TextStyle(color: Color(0xFFFFF8DE)),
+                        weekendTextStyle: TextStyle(color: Color(0xFFFFF8DE)),
+                        todayTextStyle: TextStyle(
+                          color: Color(0xFFFFF8DE),
+                          fontWeight: FontWeight.bold,
+                        ),
+                        selectedTextStyle: TextStyle(
+                          color: Color(0xFFFFF8DE),
+                          fontWeight: FontWeight.bold,
+                        ),
+                        selectedDecoration: BoxDecoration(
+                          color: Color(0xFF555873), // 이 부분에서 색상 변경
+                          shape: BoxShape.circle,
+                        ),
+                        todayDecoration: BoxDecoration(
+                          color: Color(0xFF15143E),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      headerStyle: HeaderStyle(
+                        formatButtonVisible: false,
+                        titleTextStyle: TextStyle(
+                          color: Color(0xFFFFF8DE),
+                          fontSize: 20.0,
+                        ),
+                        leftChevronIcon: Icon(
+                          Icons.chevron_left,
+                          color: Color(0xFFFFF8DE),
+                        ),
+                        rightChevronIcon: Icon(
+                          Icons.chevron_right,
+                          color: Color(0xFFFFF8DE),
+                        ),
+                      ),
+                      daysOfWeekStyle: DaysOfWeekStyle(
+                        weekdayStyle: TextStyle(color: Color(0xFFFFF8DE)),
+                        weekendStyle: TextStyle(color: Color(0xFFFFF8DE)),
+                      ),
+                    ),
                   ),
-                  child: TableCalendar(
-                    firstDay: DateTime.utc(2000, 1, 1),
-                    lastDay: DateTime.utc(2050, 12, 31),
-                    focusedDay: _focusedDay,
-                    selectedDayPredicate: (day) {
-                      return isSameDay(_selectedDay, day);
-                    },
-                    onDaySelected: _onDaySelected,
-                    calendarFormat: CalendarFormat.month,
-                    calendarStyle: CalendarStyle(
-                      defaultTextStyle: TextStyle(color: Color(0xFFFFF8DE)),
-                      weekendTextStyle: TextStyle(color: Color(0xFFFFF8DE)),
-                      todayTextStyle: TextStyle(
-                        color: Color(0xFFFFF8DE),
-                        fontWeight: FontWeight.bold,
-                      ),
-                      selectedTextStyle: TextStyle(
-                        color: Color(0xFFFFF8DE),
-                        fontWeight: FontWeight.bold,
-                      ),
-                      selectedDecoration: BoxDecoration(
-                        color: Color(0xFF555873), // 이 부분에서 색상 변경
-                        shape: BoxShape.circle,
-                      ),
-                      todayDecoration: BoxDecoration(
-                        color: Color(0xFF15143E),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    headerStyle: HeaderStyle(
-                      formatButtonVisible: false,
-                      titleTextStyle: TextStyle(
-                        color: Color(0xFFFFF8DE),
-                        fontSize: 20.0,
-                      ),
-                      leftChevronIcon: Icon(
-                        Icons.chevron_left,
-                        color: Color(0xFFFFF8DE),
-                      ),
-                      rightChevronIcon: Icon(
-                        Icons.chevron_right,
-                        color: Color(0xFFFFF8DE),
-                      ),
-                    ),
-                    daysOfWeekStyle: DaysOfWeekStyle(
-                      weekdayStyle: TextStyle(color: Color(0xFFFFF8DE)),
-                      weekendStyle: TextStyle(color: Color(0xFFFFF8DE)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                Container(
-                  height: 150,
-                  width: double.infinity,
-                  child: InkWell(  // 카드를 클릭 가능하게 만드는 위젯
-                    onTap: () {
-                      if (_selectedDay != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DiaryDetailPage(
-                              date: _selectedDay!,
-                              content: diaryEntries[_selectedDay!] ?? "내용 없음",
+                  const SizedBox(height: 20.0),
+                  Container(
+                    width: double.infinity,
+                    child: InkWell(  // 카드를 클릭 가능하게 만드는 위젯
+                      onTap: () {
+                        if (_selectedDay != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DiaryDetailPage(
+                                date: _selectedDay!,
+                                content: diaryEntries[_selectedDay!] ?? "내용 없음",
+                              ),
                             ),
+                          );
+                        }
+                      },
+                      child: Card(
+                        color: Color(0x502B313F),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                _cardTitle ?? "제목 없음",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFFFFF8DE),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                _cardContent ?? "내용 없음",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xFFFFF8DE),
+                                ),
+                              ),
+                            ],
                           ),
-                        );
-                      }
-                    },
-                    child: Card(
-                      color: Color(0x502B313F),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              _cardTitle ?? "제목 없음",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFFFFF8DE),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              _cardContent ?? "내용 없음",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Color(0xFFFFF8DE),
-                              ),
-                            ),
-                          ],
                         ),
                       ),
                     ),
                   ),
-                ),
-
-              ],
+                ],
+              ),
             ),
           ),
         ],
       ),
-      // 오른쪽 아래에 '+' 버튼 추가, 위치 조정을 위해 Padding 사용
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 100.0),
         child: FloatingActionButton(
